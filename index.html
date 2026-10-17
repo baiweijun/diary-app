@@ -109,13 +109,26 @@
       <div class="tab-row">
         <button class="tab active" data-mode="list" id="tab-list">列表</button>
         <button class="tab" data-mode="calendar" id="tab-calendar">日历</button>
+        <button class="tab" data-mode="review" id="tab-review">回顾</button>
       </div>
 
       <!-- 列表模式 -->
       <div class="scroll-body" id="journal-list">
+        <div class="search-bar">
+          <input type="text" id="search-input" placeholder="🔍 搜索标题 / 内容 / 标签…" maxlength="50" />
+        </div>
+        <div class="filter-row" id="filter-row">
+          <button class="filter-chip active" data-filter="all">全部</button>
+          <button class="filter-chip" data-filter="喜"><span>😊</span>喜</button>
+          <button class="filter-chip" data-filter="怒"><span>😠</span>怒</button>
+          <button class="filter-chip" data-filter="静"><span>😌</span>静</button>
+          <button class="filter-chip" data-filter="忧"><span>😟</span>忧</button>
+          <button class="filter-chip" data-filter="img"><span>🖼</span>有图</button>
+        </div>
         <div class="mood-stats" id="mood-stats"></div>
         <div class="entry-list" id="entry-list"></div>
         <div class="empty-hint hidden" id="list-empty">还没有日记，去写第一篇吧 ✍️</div>
+        <div class="empty-hint hidden" id="search-empty">没有匹配的日记</div>
       </div>
 
       <!-- 日历模式 -->
@@ -132,6 +145,27 @@
         <div class="cal-legend">
           <span><i class="lg lg-done"></i>写了日记</span>
           <span><i class="lg lg-today"></i>今天</span>
+        </div>
+      </div>
+
+      <!-- 回顾模式 -->
+      <div class="scroll-body hidden" id="journal-review">
+        <div class="review-overview" id="review-overview"></div>
+        <div class="review-block">
+          <div class="review-title">心情分布</div>
+          <div class="mood-dist" id="mood-dist"></div>
+        </div>
+        <div class="review-block">
+          <div class="review-title">年度心情地图</div>
+          <div class="heatmap" id="heatmap"></div>
+          <div class="heatmap-legend">
+            <span class="hm-key"><i style="background:#f2a65a"></i>喜</span>
+            <span class="hm-key"><i style="background:#e06363"></i>怒</span>
+            <span class="hm-key"><i style="background:#6fb1a0"></i>静</span>
+            <span class="hm-key"><i style="background:#7c92c4"></i>忧</span>
+            <span class="hm-key"><i style="background:#b3a98a"></i>自定义</span>
+            <span class="hm-key"><i style="background:#efe6c8"></i>没写</span>
+          </div>
         </div>
       </div>
     </section>
@@ -173,6 +207,19 @@
         </div>
 
         <div class="field">
+          <label class="field-label">日记书（PDF）</label>
+          <p class="field-tip">把日记排版成一本可打印 / 留存的书，选好范围后「生成 PDF」，在系统弹窗里选「另存为 PDF」即可。</p>
+          <div class="settings-btns">
+            <select id="pdf-range" class="range-select">
+              <option value="all">全部日记</option>
+              <option value="thisYear">今年</option>
+              <option value="lastYear">去年</option>
+            </select>
+            <button class="ghost-btn" id="btn-export-pdf">生成 PDF</button>
+          </div>
+        </div>
+
+        <div class="field">
           <label class="field-label">关于</label>
           <p class="field-tip">数据只存在你手机本地，转发链接别人看不到你的日记。<br/>当前共 <b id="stat-count">0</b> 篇日记。</p>
         </div>
@@ -195,6 +242,9 @@
     <!-- ============ Toast ============ -->
     <div class="toast hidden" id="toast"></div>
   </div>
+
+  <!-- ============ 打印用：日记书 ============ -->
+  <div id="pdf-book" style="display:none"></div>
 
   <script src="app.js"></script>
 </body>

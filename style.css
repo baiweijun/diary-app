@@ -190,3 +190,59 @@ body{
 /* ---------- Toast ---------- */
 .toast{position:absolute;bottom:90px;left:50%;transform:translateX(-50%);background:rgba(50,40,20,.92);color:#fff;padding:11px 20px;border-radius:999px;font-size:14px;z-index:100;animation:fade .3s;}
 @keyframes fade{from{opacity:0;}to{opacity:1;}}
+
+/* ---------- 搜索 + 筛选 ---------- */
+.search-bar{margin-bottom:12px;}
+.search-bar input{width:100%;border:1px solid var(--line);border-radius:999px;padding:10px 16px;font-size:14px;background:var(--bg-soft);color:var(--ink);font-family:inherit;}
+.search-bar input:focus{outline:none;border-color:var(--purple);background:var(--card);}
+.filter-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.filter-row::-webkit-scrollbar{display:none;}
+.filter-chip{flex:0 0 auto;background:var(--card);border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;cursor:pointer;color:var(--ink);display:flex;align-items:center;gap:3px;white-space:nowrap;}
+.filter-chip span{font-size:14px;}
+.filter-chip.active{border-color:var(--purple);background:var(--purple-soft);color:var(--purple-deep);font-weight:600;}
+
+/* ---------- 回顾页 ---------- */
+.review-overview{margin-bottom:18px;}
+.ov-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.ov-item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 6px;text-align:center;box-shadow:var(--shadow);}
+.ov-num{font-size:17px;font-weight:800;color:var(--purple-deep);}
+.ov-lab{font-size:11px;color:var(--ink-soft);margin-top:3px;}
+.rev-empty{text-align:center;color:var(--ink-soft);margin-top:40px;font-size:15px;}
+.review-block{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:16px;box-shadow:var(--shadow);}
+.review-title{font-size:15px;font-weight:700;margin-bottom:14px;}
+.mood-dist{display:flex;flex-direction:column;gap:10px;}
+.dist-row{display:flex;align-items:center;gap:10px;}
+.dist-lab{width:64px;font-size:13px;color:var(--ink);flex-shrink:0;}
+.dist-bar{flex:1;height:14px;background:var(--bg-soft);border-radius:999px;overflow:hidden;}
+.dist-bar i{display:block;height:100%;border-radius:999px;}
+.dist-num{width:28px;text-align:right;font-size:13px;font-weight:700;color:var(--ink);flex-shrink:0;}
+.heatmap{display:grid;grid-template-rows:repeat(7,1fr);grid-auto-flow:column;gap:3px;overflow-x:auto;padding-bottom:4px;}
+.hm-cell{width:11px;height:11px;border-radius:3px;flex-shrink:0;}
+.heatmap-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;font-size:11px;color:var(--ink-soft);}
+.hm-key{display:flex;align-items:center;gap:4px;}
+.hm-key i{width:11px;height:11px;border-radius:3px;display:inline-block;}
+
+/* ---------- 日记书（PDF）---------- */
+.range-select{flex:1;border:1px solid var(--line);border-radius:12px;padding:11px 12px;font-size:14px;background:var(--card);color:var(--ink);font-family:inherit;-webkit-appearance:none;appearance:none;}
+#pdf-book{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;color:#222;max-width:720px;margin:0 auto;padding:24px;background:#fff;}
+.pdf-cover{text-align:center;padding:60px 0 40px;}
+.pdf-cover h1{font-size:30px;margin:0 0 12px;}
+.pdf-sub{color:#666;font-size:14px;}
+.pdf-entry{border-top:1px solid #eee;padding:18px 0;}
+.pe-head{display:flex;justify-content:space-between;font-size:13px;color:#888;margin-bottom:6px;}
+.pe-mood{font-size:13px;}
+.pe-title{font-size:18px;font-weight:700;margin:4px 0 8px;}
+.pe-content{font-size:14px;line-height:1.8;white-space:pre-wrap;word-break:break-word;}
+.pe-imgs{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.pe-imgs img{max-width:160px;max-height:160px;border-radius:8px;object-fit:cover;border:1px solid #ddd;}
+.pe-tags{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;}
+.pe-tags span{background:#f3eefb;color:#7d4fc4;font-size:12px;padding:3px 10px;border-radius:999px;}
+
+/* ---------- 打印日记书 ---------- */
+@media print{
+  body{background:#fff;overflow:visible;}
+  #app{display:none!important;}
+  #pdf-book{display:block!important;position:static;width:auto;max-width:none;padding:0;background:#fff;}
+  .pdf-entry{page-break-inside:avoid;}
+  .pdf-cover{page-break-after:always;}
+}
