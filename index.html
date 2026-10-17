@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#f6ecc6" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="淡黄日记" />
+  <link rel="manifest" id="manifest-link" href="dynamic-manifest.webmanifest" />
+  <link rel="stylesheet" href="style.css" />
+  <title>今天写日记了吗</title>
+</head>
+<body>
+  <div id="app">
+
+    <!-- ============ 封面页 ============ -->
+    <section class="view view-cover" id="view-cover">
+      <div class="cover-inner">
+        <div class="cover-icon" id="cover-icon">📔</div>
+        <h1 class="cover-title">今天写日记了吗</h1>
+        <p class="cover-sub" id="cover-encourage">把今天留下来吧</p>
+        <button class="btn-primary cover-start" id="btn-start">马上开始</button>
+        <div class="cover-stats" id="cover-stats"></div>
+        <div class="cover-links">
+          <button class="link-btn" id="btn-to-journal">我的日记</button>
+          <span class="dot-sep">·</span>
+          <button class="link-btn" id="btn-to-settings">设置</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 写日记页 ============ -->
+    <section class="view hidden" id="view-write">
+      <header class="topbar">
+        <button class="icon-btn" id="write-back">‹</button>
+        <div class="topbar-title">写日记</div>
+        <button class="icon-btn" id="write-save-top">保存</button>
+      </header>
+
+      <div class="scroll-body">
+        <div class="date-row">
+          <button class="date-arrow" id="date-prev">‹</button>
+          <div class="date-main">
+            <div class="date-big" id="write-date">2026年10月15日</div>
+            <div class="date-week" id="write-week">星期四</div>
+          </div>
+          <button class="date-arrow" id="date-next">›</button>
+        </div>
+
+        <div class="field">
+          <label class="field-label">今天的心情</label>
+          <div class="mood-row" id="mood-row">
+            <button class="mood-chip" data-mood="喜"><span class="mood-emo">😊</span><span>喜</span></button>
+            <button class="mood-chip" data-mood="怒"><span class="mood-emo">😠</span><span>怒</span></button>
+            <button class="mood-chip" data-mood="静"><span class="mood-emo">😌</span><span>静</span></button>
+            <button class="mood-chip" data-mood="忧"><span class="mood-emo">😟</span><span>忧</span></button>
+            <button class="mood-chip mood-custom" data-mood="__custom__"><span class="mood-emo">✏️</span><span>自定义</span></button>
+          </div>
+          <div class="custom-mood-box hidden" id="custom-mood-box">
+            <input type="text" id="custom-mood-input" placeholder="今天是什么样的心情？如：有点累、兴奋…" maxlength="12" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">给今天起个名字（选填）</label>
+          <input type="text" id="title-input" placeholder="如：平凡却温暖的一天" maxlength="40" />
+        </div>
+
+        <div class="field">
+          <label class="field-label">今天发生了什么</label>
+          <textarea id="content-input" placeholder="写点什么吧，三行也行…" rows="9"></textarea>
+          <div class="word-count" id="word-count">0 字</div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">图片（选填）</label>
+          <div class="img-add-row">
+            <button class="img-add-btn" id="img-add">＋ 添加图片</button>
+            <input type="file" id="img-input" accept="image/*" multiple hidden />
+          </div>
+          <div class="img-thumbs" id="img-thumbs"></div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">标签（选填，用空格分隔）</label>
+          <input type="text" id="tags-input" placeholder="如：工作 旅行 美食" maxlength="60" />
+        </div>
+      </div>
+
+      <footer class="bottombar">
+        <button class="btn-primary full" id="write-save">保存今天</button>
+        <div class="write-nav">
+          <button class="nav-arrow" id="write-prev" aria-label="上一页">‹</button>
+          <span class="nav-label">封面 ‹ ‹ › › 我的日记</span>
+          <button class="nav-arrow" id="write-next" aria-label="下一页">›</button>
+        </div>
+      </footer>
+    </section>
+
+    <!-- ============ 我的日记页 ============ -->
+    <section class="view hidden" id="view-journal">
+      <header class="topbar">
+        <button class="icon-btn" id="journal-back">‹</button>
+        <div class="topbar-title">我的日记</div>
+        <button class="icon-btn" id="journal-new">＋</button>
+      </header>
+
+      <div class="tab-row">
+        <button class="tab active" data-mode="list" id="tab-list">列表</button>
+        <button class="tab" data-mode="calendar" id="tab-calendar">日历</button>
+      </div>
+
+      <!-- 列表模式 -->
+      <div class="scroll-body" id="journal-list">
+        <div class="mood-stats" id="mood-stats"></div>
+        <div class="entry-list" id="entry-list"></div>
+        <div class="empty-hint hidden" id="list-empty">还没有日记，去写第一篇吧 ✍️</div>
+      </div>
+
+      <!-- 日历模式 -->
+      <div class="scroll-body hidden" id="journal-calendar">
+        <div class="cal-head">
+          <button class="date-arrow" id="cal-prev">‹</button>
+          <div class="cal-title" id="cal-title">2026年10月</div>
+          <button class="date-arrow" id="cal-next">›</button>
+        </div>
+        <div class="cal-weekday">
+          <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="cal-legend">
+          <span><i class="lg lg-done"></i>写了日记</span>
+          <span><i class="lg lg-today"></i>今天</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 设置页 ============ -->
+    <section class="view hidden" id="view-settings">
+      <header class="topbar">
+        <button class="icon-btn" id="settings-back">‹</button>
+        <div class="topbar-title">设置</div>
+        <span class="icon-btn"></span>
+      </header>
+      <div class="scroll-body">
+        <div class="field">
+          <label class="field-label">App 名字</label>
+          <p class="field-tip">显示在手机主屏图标下方和最近任务里，重新「添加到主屏幕」即生效。</p>
+          <input type="text" id="appname-input" placeholder="如：我的小本子" maxlength="12" />
+        </div>
+
+        <div class="field">
+          <label class="field-label">App 图标</label>
+          <p class="field-tip">选好后，删除主屏旧图标、重新「添加到主屏幕」即生效。</p>
+          <div class="icon-picker" id="icon-picker"></div>
+          <div class="icon-upload-row">
+            <button class="img-add-btn" id="icon-pick">从相册选择</button>
+            <button class="img-add-btn" id="icon-camera">拍照</button>
+          </div>
+          <input type="file" id="icon-input" accept="image/*" hidden />
+          <input type="file" id="icon-input-cam" accept="image/*" capture="environment" hidden />
+        </div>
+
+        <div class="field">
+          <label class="field-label">数据安全</label>
+          <div class="settings-btns">
+            <button class="ghost-btn" id="btn-export">导出备份</button>
+            <button class="ghost-btn" id="btn-import">导入恢复</button>
+            <input type="file" id="import-input" accept="application/json" hidden />
+          </div>
+          <p class="field-tip">导出会把全部日记（含图片）存成一个文件到手机，换机或清数据后可导回。</p>
+        </div>
+
+        <div class="field">
+          <label class="field-label">关于</label>
+          <p class="field-tip">数据只存在你手机本地，转发链接别人看不到你的日记。<br/>当前共 <b id="stat-count">0</b> 篇日记。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 日记详情弹层 ============ -->
+    <div class="sheet-mask hidden" id="detail-mask">
+      <div class="sheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-body" id="detail-body"></div>
+        <div class="sheet-actions">
+          <button class="ghost-btn" id="detail-edit">编辑</button>
+          <button class="ghost-btn danger" id="detail-delete">删除</button>
+          <button class="ghost-btn" id="detail-close">关闭</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ Toast ============ -->
+    <div class="toast hidden" id="toast"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "今天写日记了吗",
+  "short_name": "淡黄日记",
+  "description": "一个淡黄色风格的私密日记本，支持文字、图片、心情与日历回看。",
+  "lang": "zh-CN",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fbf3d6",
+  "theme_color": "#f6ecc6",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
